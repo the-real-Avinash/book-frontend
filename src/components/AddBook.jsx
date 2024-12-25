@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:3000';
+import React, { useState } from "react";
+import { addBook } from "../services/api"; // Import the API function
 
 function AddBook() {
-  const [book, setBook] = useState({ title: '', author: '', genre: '', publishedYear: '' });
+  const [book, setBook] = useState({
+    title: "",
+    author: "",
+    genre: "",
+    publishedYear: "",
+  });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post(`${API_BASE_URL}/books`, book)
-      .then(() => {
-        setBook({ title: '', author: '', genre: '', publishedYear: '' });
-        window.location.href = '/';
-      })
-      .catch(error => console.error('Error adding book:', error));
+    try {
+      await addBook(book); // Call the addBook API function
+      setBook({ title: "", author: "", genre: "", publishedYear: "" });
+      window.location.href = "/"; // Redirect after successful submission
+    } catch (error) {
+      console.error("Error adding book:", error);
+    }
   };
 
   return (
@@ -60,7 +64,12 @@ function AddBook() {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Add Book</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Add Book
+        </button>
       </form>
     </div>
   );

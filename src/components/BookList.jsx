@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-
-const API_BASE_URL = "http://localhost:3000";
+import { fetchBooks, deleteBook } from "../services/api"; // Import functions from api.js
 
 function BookList() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${API_BASE_URL}/books`)
+    // Fetch books using the service function
+    fetchBooks()
       .then((response) => setBooks(response.data))
       .catch((error) => console.error("Error fetching books:", error));
   }, []);
 
-  const deleteBook = (id) => {
-    axios
-      .delete(`${API_BASE_URL}/books/${id}`)
-      .then(() => setBooks(books.filter((book) => book._id !== id)))
+  const handleDeleteBook = (id) => {
+    // Delete book using the service function
+    deleteBook(id)
+      .then(() => setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id)))
       .catch((error) => console.error("Error deleting book:", error));
   };
 
@@ -51,7 +49,7 @@ function BookList() {
                 Edit
               </Link>
               <button
-                onClick={() => deleteBook(book._id)}
+                onClick={() => handleDeleteBook(book._id)}
                 className="text-red-500 hover:underline"
               >
                 Delete

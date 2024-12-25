@@ -1,25 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
-const API_BASE_URL = 'http://localhost:3000';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { fetchBookById, updateBook } from "../services/api"; // Import API service functions
 
 function EditBook() {
   const { id } = useParams();
-  const [book, setBook] = useState({ title: '', author: '', genre: '', publishedYear: '' });
+  const navigate = useNavigate(); // Use navigate for programmatic navigation
+  const [book, setBook] = useState({
+    title: "",
+    author: "",
+    genre: "",
+    publishedYear: "",
+  });
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/books/${id}`)
-      .then(response => setBook(response.data))
-      .catch(error => console.error('Error fetching book:', error));
+    // Fetch book details using the service function
+    fetchBookById(id)
+      .then((response) => setBook(response.data))
+      .catch((err) => setError(err.response?.data || "Error fetching book details."));
   }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`${API_BASE_URL}/books/${id}`, book)
-      .then(() => window.location.href = '/')
-      .catch(error => console.error('Error updating book:', error));
+    // Update the book using the service function
+    updateBook(id, book)
+      .then(() => navigate("/")) // Redirect to home after successful update
+      .catch((err) => setError(err.response?.data || "Error updating book."));
   };
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
 
   return (
     <div>
@@ -65,7 +76,9 @@ function EditBook() {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Update Book</button>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+          Update Book
+        </button>
       </form>
     </div>
   );
