@@ -29,54 +29,73 @@ function EditBook() {
   };
 
   if (error) {
-    return <div className="text-red-500">{error}</div>;
+    return (
+      <div className="text-center mt-4">
+        <p className="text-red-600 font-medium">{error}</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Edit Book</h2>
+    <div className="max-w-3xl mx-auto mt-8 p-6 bg-white border border-gray-300 rounded-lg shadow-md">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">Edit Book</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block mb-2">Title</label>
+        <div className="mb-6">
+          <label className="block text-lg font-semibold text-gray-700 mb-2">
+            Title
+          </label>
           <input
             type="text"
             value={book.title}
             onChange={(e) => setBook({ ...book, title: e.target.value })}
-            className="border p-2 w-full rounded"
+            className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Enter book title"
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block mb-2">Author</label>
+        <div className="mb-6">
+          <label className="block text-lg font-semibold text-gray-700 mb-2">
+            Author
+          </label>
           <input
             type="text"
             value={book.author}
             onChange={(e) => setBook({ ...book, author: e.target.value })}
-            className="border p-2 w-full rounded"
+            className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Enter author name"
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block mb-2">Genre</label>
+        <div className="mb-6">
+          <label className="block text-lg font-semibold text-gray-700 mb-2">
+            Genre
+          </label>
           <input
             type="text"
             value={book.genre}
             onChange={(e) => setBook({ ...book, genre: e.target.value })}
-            className="border p-2 w-full rounded"
+            className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Enter book genre"
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block mb-2">Published Year</label>
+        <div className="mb-6">
+          <label className="block text-lg font-semibold text-gray-700 mb-2">
+            Published Year
+          </label>
           <input
             type="number"
             value={book.publishedYear}
             onChange={(e) => setBook({ ...book, publishedYear: e.target.value })}
-            className="border p-2 w-full rounded"
+            className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Enter published year"
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white text-lg font-medium py-3 rounded-lg transition duration-200"
+        >
           Update Book
         </button>
       </form>

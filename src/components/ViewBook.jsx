@@ -15,28 +15,44 @@ function ViewBook() {
   }, [id]);
 
   if (error) {
-    return <div className="text-red-500">{error}</div>;
+    return (
+      <div className="text-center mt-4">
+        <p className="text-red-600 font-medium">{error}</p>
+      </div>
+    );
   }
 
   if (!book) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center mt-4">
+        <p className="text-gray-500 font-medium">Loading...</p>
+      </div>
+    );
   }
 
   return (
-    <div className="p-4 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Book Details</h2>
-      <p>
-        <strong>Title:</strong> {book.title}
-      </p>
-      <p>
-        <strong>Author:</strong> {book.author}
-      </p>
-      <p>
-        <strong>Genre:</strong> {book.genre}
-      </p>
-      <p>
-        <strong>Published Year:</strong> {book.publishedYear}
-      </p>
+    <div className="max-w-2xl mx-auto mt-8 p-6 bg-white border border-gray-300 rounded-lg shadow-md">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">Book Details</h2>
+      <div className="space-y-4">
+        <p className="text-lg text-gray-700">
+          <strong className="font-semibold text-gray-800">Title:</strong>{" "}
+          {book.title}
+        </p>
+        <p className="text-lg text-gray-700">
+          <strong className="font-semibold text-gray-800">Author:</strong>{" "}
+          {book.author}
+        </p>
+        <p className="text-lg text-gray-700">
+          <strong className="font-semibold text-gray-800">Genre:</strong>{" "}
+          {book.genre}
+        </p>
+        <p className="text-lg text-gray-700">
+          <strong className="font-semibold text-gray-800">
+            Published Year:
+          </strong>{" "}
+          {book.publishedYear}
+        </p>
+      </div>
     </div>
   );
 }
